@@ -1,10 +1,27 @@
 import json
 
+import requests
 
-def get_list():
-    with open('list.json', 'r', encoding='utf-8') as f:
+
+def get_list(playlist_id):
+
+    url = "https://c.y.qq.com/v8/fcg-bin/fcg_v8_playlist_cp.fcg"
+    headers = {}
+    params = {"format": "json",
+              "id": playlist_id}
+
+    response = requests.get(url, headers=headers, params=params)
+    result = response.json()
+
+    return result
+
+def load_json(filename):
+    with open(filename, 'r', encoding='utf-8') as f:
         data = json.load(f)
+    return data
 
+
+def parse_list(data):
     arr = data['data']['cdlist'][0]['songlist']
     songs_info = []
 

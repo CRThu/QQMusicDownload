@@ -1,7 +1,8 @@
-from get_list import get_list
+from get_list import get_list,parse_list
 from sixyin import search
 
-songs_info = get_list()
+get_list_json = get_list('[playlist_id]')
+songs_info = parse_list(get_list_json)
 
 # for song_info in songs_info:
 #     print(song_info)
