@@ -40,6 +40,9 @@ def verify_key(key):
 
 
 def get_download_link(song_info, key):
+    if 'download_link' in song_info.keys():
+        return song_info['download_link']
+
     url = "https://api.itooi.cn/tencent/url"
     headers = {'Unlockcode': key}
     params = {'id': song_info['sixyin_song_id'],
@@ -54,4 +57,4 @@ def get_download_link(song_info, key):
     if result['code'] == 400:
         return None
     else:
-        return result['data'][0]
+        return song_info['download_link']
