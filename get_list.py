@@ -1,8 +1,6 @@
 import requests
 
-
 def get_list(playlist_id):
-
     url = "https://c.y.qq.com/v8/fcg-bin/fcg_v8_playlist_cp.fcg"
     headers = {}
     params = {"format": "json",
@@ -12,6 +10,7 @@ def get_list(playlist_id):
     result = response.json()
 
     return result
+
 
 def parse_list(data):
     arr = data['data']['cdlist'][0]['songlist']
@@ -33,14 +32,17 @@ def parse_list(data):
         else:
             raise Exception('{0} 未找到相应解析度的音乐'.format(i['songname']))
 
-        songs_info.append((i['songname'],
-                           signer_names,
-                           i['albumname'],
-                           i['strMediaMid'],
-                           song_type,
-                           file_size))
+        m = dict()
+        m['songname'] = i['songname']
+        m['signernames'] = signer_names
+        m['albumname'] = i['albumname']
+        m['strMediaMid'] = i['strMediaMid']
+        m['songtype'] = song_type
+        m['filesize'] = file_size
 
-    songs_info.sort(key=lambda x: (x[1], x[2]))
+        songs_info.append(m)
+
+    songs_info.sort(key=lambda x: (x['signernames'], x['albumname']))
 
     # for song_info in songs_info:
     #    print(song_info)

@@ -2,7 +2,7 @@ import requests
 
 
 def search(song_info):
-    song_search_kw = '{0}+{1}+{2}'.format(song_info[0], song_info[1], song_info[2])
+    song_search_kw = '{0}+{1}+{2}'.format(song_info['songname'], song_info['signernames'], song_info['albumname'])
 
     url = "https://api.itooi.cn/tencent/search"
     headers = {}
@@ -18,9 +18,10 @@ def search(song_info):
     song_singer = str.join('|', [signer for signer in result['data']['list'][0]['singers']])
     song_album = result['data']['list'][0]['albumName']
 
-    search_info = (song_id, song_name, song_singer, song_album)
-    # print(search_info)
-    return search_info
+    song_info['sixyin_song_id'] = song_id
+    song_info['sixyin_song_name'] = song_name
+    song_info['sixyin_song_singer'] = song_singer
+    song_info['sixyin_song_album'] = song_album
 
 
 def verify_key(key):
@@ -35,15 +36,17 @@ def verify_key(key):
     return True if result['code'] == 200 else False
 
 
-def get_download_link(song_info, search_info, key):
+def get_download_link(song_info, key):
     url = "https://api.itooi.cn/tencent/url"
     headers = {'Unlockcode': key}
-    params = {'id': search_info[0],
-              'quality': song_info[4],
+    params = {'id': song_info['sixyin_song_id'],
+              'quality': song_info['songtype'],
               'isRedirect': '0'}  # 是否直接下载
 
     response = requests.get(url, headers=headers, params=params)
     result = response.json()
+
+    song_info['download_link'] = result['data'][0]
 
     if result['code'] == 400:
         return None
