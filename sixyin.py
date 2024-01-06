@@ -2,6 +2,9 @@ import requests
 
 
 def search(song_info):
+    if 'sixyin_song_id' in song_info.keys():
+        return
+
     song_search_kw = '{0}+{1}+{2}'.format(song_info['songname'], song_info['signernames'], song_info['albumname'])
 
     url = "https://api.itooi.cn/tencent/search"
