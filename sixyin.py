@@ -21,3 +21,31 @@ def search(song_info):
     search_info = (song_id, song_name, song_singer, song_album)
     # print(search_info)
     return search_info
+
+
+def verify_key(key):
+    url = "https://api.itooi.cn/unlock/" + key
+    headers = {}
+    params = {}
+
+    response = requests.get(url, headers=headers, params=params)
+    result = response.json()
+    # print(result['code'])
+    # print(result['msg'])
+    return True if result['code'] == 200 else False
+
+
+def get_download_link(song_info, search_info, key):
+    url = "https://api.itooi.cn/tencent/url"
+    headers = {'Unlockcode': key}
+    params = {'id': search_info[0],
+              'quality': song_info[4],
+              'isRedirect': '0'}  # 是否直接下载
+
+    response = requests.get(url, headers=headers, params=params)
+    result = response.json()
+
+    if result['code'] == 400:
+        return None
+    else:
+        return result['data'][0]

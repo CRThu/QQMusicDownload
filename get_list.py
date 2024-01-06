@@ -1,5 +1,3 @@
-import json
-
 import requests
 
 
@@ -14,12 +12,6 @@ def get_list(playlist_id):
     result = response.json()
 
     return result
-
-def load_json(filename):
-    with open(filename, 'r', encoding='utf-8') as f:
-        data = json.load(f)
-    return data
-
 
 def parse_list(data):
     arr = data['data']['cdlist'][0]['songlist']
