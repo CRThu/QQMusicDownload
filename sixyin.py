@@ -1,4 +1,14 @@
+import time
+
 import requests
+
+search_sleep = 2
+getlink_sleep = 2
+
+sixyin_proxies = {
+    'http': 'http://localhost:7890',
+    'https': 'http://localhost:7890',
+}
 
 
 def search(song_info):
@@ -13,8 +23,12 @@ def search(song_info):
               # "keyword": "听见下雨的声音+魏如昀+听见下雨的声音 电影原声带"}
               "keyword": song_search_kw}
 
-    response = requests.get(url, headers=headers, params=params)
+    time.sleep(search_sleep)
+    response = requests.get(url, headers=headers, params=params, proxies=sixyin_proxies)
     result = response.json()
+
+    if len(result['data']['list']) == 0:
+        return
 
     song_id = result['data']['list'][0]['id']
     song_name = result['data']['list'][0]['name']
@@ -32,7 +46,7 @@ def verify_key(key):
     headers = {}
     params = {}
 
-    response = requests.get(url, headers=headers, params=params)
+    response = requests.get(url, headers=headers, params=params, proxies=sixyin_proxies)
     result = response.json()
     # print(result['code'])
     # print(result['msg'])
@@ -40,6 +54,9 @@ def verify_key(key):
 
 
 def get_download_link(song_info, key):
+    if 'sixyin_song_id' not in song_info.keys():
+        return None
+
     if 'download_link' in song_info.keys():
         return song_info['download_link']
 
@@ -49,7 +66,8 @@ def get_download_link(song_info, key):
               'quality': song_info['songtype'],
               'isRedirect': '0'}  # 是否直接下载
 
-    response = requests.get(url, headers=headers, params=params)
+    time.sleep(getlink_sleep)
+    response = requests.get(url, headers=headers, params=params, proxies=sixyin_proxies)
     result = response.json()
 
     song_info['download_link'] = result['data'][0]

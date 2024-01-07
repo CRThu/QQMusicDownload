@@ -2,19 +2,27 @@ import os
 
 import requests
 
+download_proxies = {
+    'http': '',
+    'https': '',
+}
+
 
 def extract_filename(url):
     return os.path.basename(url.split('?')[0])
 
 
 def download_file(songs_info, download_dir):
+    if 'download_link' not in songs_info.keys():
+        return False
+
     # 若文件存在且校验通过则跳过下载
     if verify_file(songs_info):
         print('存在歌曲，已跳过下载')
         return True
 
     filename = songs_info['strMediaMid']
-    r = requests.get(songs_info['download_link'])
+    r = requests.get(songs_info['download_link'], proxies=download_proxies)
     song_path = os.path.join(download_dir, filename)
     with open(song_path, 'wb') as f:
         f.write(r.content)
