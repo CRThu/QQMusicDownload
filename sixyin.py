@@ -70,9 +70,9 @@ def get_download_link(song_info, key):
     response = requests.get(url, headers=headers, params=params, proxies=sixyin_proxies)
     result = response.json()
 
-    song_info['download_link'] = result['data'][0]
-
     if result['code'] == 400:
         return None
     else:
+        song_info['download_link'] = result['data'][0]
+
         return song_info['download_link']

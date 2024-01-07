@@ -13,7 +13,7 @@ playlist_id = '3222851321'  # QQ音乐歌单ID，通过分享获取
 unlock_key = '8B4B'  # 需通过flac.life官网免费获取解锁码
 cache_dir = './cache'
 music_dir = './music'
-
+start_at_index = 285
 paylist_raw_json_path = os.path.join(cache_dir, 'playlist.{0}.raw.json'.format(playlist_id))
 paylist_info_json_path = os.path.join(cache_dir, 'playlist.{0}.json'.format(playlist_id))
 
@@ -24,7 +24,7 @@ if not os.path.exists(music_dir):
     os.makedirs(music_dir)
 
 session = requests.Session()
-retries = Retry(total=3, backoff_factor=1)
+retries = Retry(total=10, backoff_factor=1)
 session.mount('http://', HTTPAdapter(max_retries=retries))
 session.mount('https://', HTTPAdapter(max_retries=retries))
 
@@ -50,16 +50,20 @@ songs_info = load_json(paylist_info_json_path)
 print('歌曲数量:', len(songs_info))
 
 for i, song_info in enumerate(songs_info):
+    if i <= start_at_index:
+        print('{0}/{1}: JUMP'.format(i, len(songs_info)))
+        continue
+
     # 搜索歌曲
-    print('{0}/{1}: SEARCH {2}'.format(i, len(songs_info), song_info['songname']))
+    print('{0}/{1}: SEARCH {2}-{3}'.format(i, len(songs_info), song_info['signernames'], song_info['songname']))
     search(song_info)
 
     # 获取歌曲链接
-    print('{0}/{1}: GETLINK {2}'.format(i, len(songs_info), song_info['songname']))
+    print('{0}/{1}: GETLINK {2}-{3}'.format(i, len(songs_info), song_info['signernames'], song_info['songname']))
     get_download_link(song_info, unlock_key)
     # print(song_info)
 
-    print('{0}/{1}: DOWNLOAD {2}'.format(i, len(songs_info), song_info['songname']))
+    print('{0}/{1}: DOWNLOAD {2}-{3}'.format(i, len(songs_info), song_info['signernames'], song_info['songname']))
     download_file(song_info, music_dir)
     store_json(paylist_info_json_path, songs_info)
 
