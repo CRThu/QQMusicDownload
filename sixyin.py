@@ -15,12 +15,16 @@ def search(song_info):
     if 'sixyin_song_id' in song_info.keys():
         return
 
-    song_search_kw = '{0}+{1}+{2}'.format(song_info['songname'], song_info['signernames'], song_info['albumname'])
+    song_search_kw = '{0} {1} {2}'.format(song_info['songname'], song_info['signernames'].replace("|", " "), song_info['albumname'])
+    # song_search_kw = '{0} {1} {2}'.format(song_info['songname'], song_info['signernames'].split("|")[0], song_info['albumname'])
+    # song_search_kw = '{0} {1}'.format(song_info['songname'], song_info['signernames'].replace("|", " "))
+    # song_search_kw = '{0} {1}'.format(song_info['songname'], song_info['albumname'])
+    # song_search_kw = '{0}'.format(song_info['songname'])
 
     url = "https://api.itooi.cn/tencent/search"
     headers = {}
     params = {"type": "song",
-              # "keyword": "听见下雨的声音+魏如昀+听见下雨的声音 电影原声带"}
+              # "keyword": "听见下雨的声音 魏如昀 听见下雨的声音 电影原声带"}
               "keyword": song_search_kw}
 
     time.sleep(search_sleep)
@@ -80,12 +84,20 @@ def get_download_link(song_info, key):
 
 def reset_verify_failed_songs_info(songs_info):
     for song_info in songs_info:
-        if 'download_verify' in song_info.keys() and not song_info['download_verify']:
-            del song_info['sixyin_song_id']
-            del song_info['sixyin_song_name']
-            del song_info['sixyin_song_singer']
-            del song_info['sixyin_song_album']
-            del song_info['download_link']
-            del song_info['download_path']
+        if ('download_verify' in song_info.keys() and not song_info['download_verify']) \
+                or ('download_done' in song_info.keys() and not song_info['download_done']):
+            if 'sixyin_song_id' in song_info.keys():
+                del song_info['sixyin_song_id']
+            if 'sixyin_song_name' in song_info.keys():
+                del song_info['sixyin_song_name']
+            if 'sixyin_song_singer' in song_info.keys():
+                del song_info['sixyin_song_singer']
+            if 'sixyin_song_album' in song_info.keys():
+                del song_info['sixyin_song_album']
+            if 'download_link' in song_info.keys():
+                del song_info['download_link']
+            if 'download_path' in song_info.keys():
+                del song_info['download_path']
             song_info['download_done'] = False
-            del song_info['download_verify']
+            if 'download_verify' in song_info.keys():
+                del song_info['download_verify']
