@@ -2,8 +2,8 @@ import time
 
 import requests
 
-search_sleep = 2
-getlink_sleep = 2
+search_sleep = 1
+getlink_sleep = 1
 
 sixyin_proxies = {
     'http': 'http://localhost:7890',
