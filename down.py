@@ -14,6 +14,7 @@ def extract_filename(url):
 
 def download_file(songs_info, download_dir):
     if 'download_link' not in songs_info.keys():
+        songs_info['download_done'] = False
         return False
 
     # 若文件存在且校验通过则跳过下载

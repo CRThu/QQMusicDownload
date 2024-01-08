@@ -76,3 +76,16 @@ def get_download_link(song_info, key):
         song_info['download_link'] = result['data'][0]
 
         return song_info['download_link']
+
+
+def reset_verify_failed_songs_info(songs_info):
+    for song_info in songs_info:
+        if 'download_verify' in song_info.keys() and not song_info['download_verify']:
+            del song_info['sixyin_song_id']
+            del song_info['sixyin_song_name']
+            del song_info['sixyin_song_singer']
+            del song_info['sixyin_song_album']
+            del song_info['download_link']
+            del song_info['download_path']
+            song_info['download_done'] = False
+            del song_info['download_verify']

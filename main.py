@@ -7,7 +7,7 @@ from requests.adapters import HTTPAdapter, Retry
 from down import download_file
 from get_list import merge_songs_info, get_list, parse_list
 from json_oper import store_json, load_json
-from sixyin import search, verify_key, get_download_link
+from sixyin import search, verify_key, get_download_link, reset_verify_failed_songs_info
 
 playlist_id = '3222851321'  # QQ音乐歌单ID，通过分享获取
 # playlist_id = '9118888178'  # QQ音乐歌单ID，通过分享获取
@@ -50,6 +50,9 @@ store_json(paylist_info_json_path, songs_info)
 #     print(song_info)
 # print(songs_info[0])
 print('歌曲数量:', len(songs_info))
+
+# reset_verify_failed_songs_info(songs_info)
+# store_json(paylist_info_json_path, songs_info)
 
 for i, song_info in enumerate(songs_info):
     if i < start_at_index:
