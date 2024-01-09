@@ -9,15 +9,37 @@ cache_dir = './cache'
 music_dir = './test_music'
 paylist_info_json_path = os.path.join(cache_dir, 'playlist.{0}.json'.format(playlist_id))
 map_info_json_path = os.path.join(cache_dir, 'map.{0}.json'.format(playlist_id))
-songs_format = '{signernames} - {songname} - {albumname}'
+songs_format = '{signernames} - {songaliasname} - {albumname}'
+
+
+def check_fail(songs_info):
+    for song_info in songs_info:
+        if not ('download_done' in song_info.keys() \
+                and song_info['download_done'] == True \
+                and 'download_verify' in song_info.keys() \
+                and song_info['download_verify'] == True):
+            print('FAIL at', song_info['signernames'], '-', song_info['songaliasname'])
+        else:
+            pass
+            # print('PASS at', song_info['signernames'], '-', song_info['songaliasname'])
+
+
+def check_duplicate(songs_info):
+    seen = {}
+    for song_info in songs_info:
+        val = song_info['signernames'] + ' - ' + song_info['songaliasname']
+        if val is not None and val in seen:
+            seen[val] = seen[val] + 1
+            print(f"Duplicate {seen[val]} songs found in dictionary: {val}")
+        else:
+            seen[val] = 1
 
 
 def sanitize_path(path):
     return re.sub(r'[\\/*?:"<>|]', "", path)
 
 
-def rename_files(directory, playlist_file, mapping_file):
-    songs_info = load_json(playlist_file)
+def rename_files(directory, songs_info, mapping_file):
     songs_info_dict = {v['strMediaMid']: v for v in songs_info}
     songs_info_id_filename_mapper = dict()
 
@@ -39,4 +61,7 @@ def rename_files(directory, playlist_file, mapping_file):
     #         print(f'Renamed {file} -> {rename_filename}')
 
 
-rename_files(music_dir, paylist_info_json_path, map_info_json_path)
+songs_info = load_json(paylist_info_json_path)
+check_fail(songs_info)
+check_duplicate(songs_info)
+# rename_files(music_dir, songs_info, map_info_json_path)
