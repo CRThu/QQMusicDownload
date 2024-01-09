@@ -25,7 +25,8 @@ def search(song_info):
     headers = {}
     params = {"type": "song",
               # "keyword": "听见下雨的声音 魏如昀 听见下雨的声音 电影原声带"}
-              "keyword": song_search_kw}
+              "keyword": song_search_kw,
+              "format": "1"}
 
     time.sleep(search_sleep)
     response = requests.get(url, headers=headers, params=params, proxies=sixyin_proxies)

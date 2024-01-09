@@ -61,6 +61,7 @@ def merge_songs_info(new_songs_info, old_songs_info):
             if 'manual' in match_old_dict.keys():
                 n['songtype'] = match_old_dict['songtype']
                 n['filesize'] = match_old_dict['filesize']
+                n['manual'] = match_old_dict['manual']
 
             if 'sixyin_song_id' in match_old_dict.keys():
                 n['sixyin_song_id'] = match_old_dict['sixyin_song_id']
