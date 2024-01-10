@@ -66,7 +66,7 @@ for i, song_info in enumerate(songs_info):
 
     # 获取歌曲链接
     print('{0}/{1}: GETLINK {2}-{3}'.format(i + 1, len(songs_info), song_info['signernames'], song_info['songname']))
-    get_download_link(song_info, unlock_key)
+    get_download_link(song_info, music_dir, unlock_key)
     # print(song_info)
 
     print('{0}/{1}: DOWNLOAD {2}-{3}'.format(i + 1, len(songs_info), song_info['signernames'], song_info['songname']))

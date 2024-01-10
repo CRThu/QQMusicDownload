@@ -2,6 +2,8 @@ import time
 
 import requests
 
+from down import verify_file
+
 search_sleep = 1
 getlink_sleep = 1
 
@@ -61,11 +63,12 @@ def verify_key(key):
     return True if result['code'] == 200 else False
 
 
-def get_download_link(song_info, key):
+def get_download_link(song_info, music_dir, key):
     if 'sixyin_song_id' not in song_info.keys():
         return None
 
-    if 'download_link' in song_info.keys():
+    verify = verify_file(music_dir, song_info)
+    if verify:
         return song_info['download_link']
 
     url = "https://api.itooi.cn/tencent/url"
