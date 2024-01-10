@@ -2,11 +2,12 @@ import json
 import os
 import re
 
+from down import verify_file
 from json_oper import load_json, store_json
 
 playlist_id = '3222851321'  # QQ音乐歌单ID，通过分享获取
 cache_dir = './cache'
-music_dir = './test_music'
+music_dir = './music'
 paylist_info_json_path = os.path.join(cache_dir, 'playlist.{0}.json'.format(playlist_id))
 map_info_json_path = os.path.join(cache_dir, 'map.{0}.json'.format(playlist_id))
 songs_format = '{signernames} - {songaliasname} - {albumname}'
@@ -63,5 +64,9 @@ def rename_files(directory, songs_info, mapping_file):
 
 songs_info = load_json(paylist_info_json_path)
 check_fail(songs_info)
+for i in songs_info:
+    verify = verify_file(music_dir, i)
+    if not verify:
+        print('VERIFY FAILED :{0}-{1}'.format(i['signernames'], i['songname']))
 check_duplicate(songs_info)
 # rename_files(music_dir, songs_info, map_info_json_path)

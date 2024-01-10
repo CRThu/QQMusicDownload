@@ -11,7 +11,7 @@ from sixyin import search, verify_key, get_download_link
 
 playlist_id = '3222851321'  # QQ音乐歌单ID，通过分享获取
 # playlist_id = '9118888178'  # QQ音乐歌单ID，通过分享获取
-unlock_key = '892D'  # 需通过flac.life官网免费获取解锁码
+unlock_key = '4A42'  # 需通过flac.life官网免费获取解锁码
 cache_dir = './cache'
 music_dir = './music'
 start_at_index = 0
