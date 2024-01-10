@@ -15,7 +15,8 @@ def search(song_info):
     if 'sixyin_song_id' in song_info.keys():
         return
 
-    song_search_kw = '{0} {1} {2}'.format(song_info['songname'], song_info['signernames'].replace("|", " "), song_info['albumname'])
+    song_search_kw = '{0} {1} {2}'.format(song_info['songname'], song_info['signernames'].replace("|", " "),
+                                          song_info['albumname'])
     # song_search_kw = '{0} {1} {2}'.format(song_info['songname'], song_info['signernames'].split("|")[0], song_info['albumname'])
     # song_search_kw = '{0} {1}'.format(song_info['songname'], song_info['signernames'].replace("|", " "))
     # song_search_kw = '{0} {1}'.format(song_info['songname'], song_info['albumname'])
@@ -26,7 +27,9 @@ def search(song_info):
     params = {"type": "song",
               # "keyword": "听见下雨的声音 魏如昀 听见下雨的声音 电影原声带"}
               "keyword": song_search_kw,
-              "format": "1"}
+              "format": "1",
+              "page": "0",
+              "pageSize": "20"}
 
     time.sleep(search_sleep)
     response = requests.get(url, headers=headers, params=params, proxies=sixyin_proxies)

@@ -7,11 +7,11 @@ from requests.adapters import HTTPAdapter, Retry
 from down import download_file
 from get_list import merge_songs_info, get_list, parse_list
 from json_oper import store_json, load_json
-from sixyin import search, verify_key, get_download_link, reset_verify_failed_songs_info
+from sixyin import search, verify_key, get_download_link
 
 playlist_id = '3222851321'  # QQ音乐歌单ID，通过分享获取
 # playlist_id = '9118888178'  # QQ音乐歌单ID，通过分享获取
-unlock_key = '428C'  # 需通过flac.life官网免费获取解锁码
+unlock_key = '892D'  # 需通过flac.life官网免费获取解锁码
 cache_dir = './cache'
 music_dir = './music'
 start_at_index = 0
