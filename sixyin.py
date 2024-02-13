@@ -7,9 +7,14 @@ from down import verify_file
 search_sleep = 1
 getlink_sleep = 1
 
+# sixyin_proxies = {
+#     'http': 'http://localhost:7890',
+#     'https': 'http://localhost:7890',
+# }
+
 sixyin_proxies = {
-    'http': 'http://localhost:7890',
-    'https': 'http://localhost:7890',
+    'http': '',
+    'https': '',
 }
 
 

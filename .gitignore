@@ -160,10 +160,9 @@ cython_debug/
 #  option (not recommended) you can uncomment the following to ignore the entire idea folder.
 #.idea/
 
-/cache/
-/music/
+/cache*/
+/music*/
 /export/
-/cache - 副本/
-/music - 副本/
+/backup_*/
 /cache.7z
 /ffmpeg/
