@@ -11,7 +11,7 @@ from sixyin import search, verify_key, get_download_link
 
 # playlist_id = '3222851321'  # QQ音乐歌单ID，通过分享获取
 playlist_id = '9118888178'  # QQ音乐歌单ID，通过分享获取
-unlock_key = 'E23A'  # 需通过flac.life官网免费获取解锁码
+unlock_key = 'B28D'  # 需通过flac.life官网免费获取解锁码
 cache_dir = './cache'
 music_dir = './music'
 start_at_index = 0
@@ -42,8 +42,12 @@ store_json(paylist_raw_json_path, playlist_raw)
 
 # 解析播放列表
 songs_info = parse_list(playlist_raw)
-# old_songs_info = load_json(paylist_info_json_path)
-# merge_songs_info(songs_info, old_songs_info)
+
+# 若旧歌单存在则合并
+if os.path.exists(paylist_info_json_path):
+    old_songs_info = load_json(paylist_info_json_path)
+    merge_songs_info(songs_info, old_songs_info)
+
 store_json(paylist_info_json_path, songs_info)
 # songs_info = load_json(paylist_info_json_path)
 

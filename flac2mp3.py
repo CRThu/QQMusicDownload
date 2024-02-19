@@ -32,6 +32,6 @@ def get_flac_filenames(d):
 flac_list = get_flac_filenames(src_dir)
 
 for idx, flac_fn in enumerate(flac_list):
-    status = convert_flac2mp3(idx, os.path.join(src_dir, flac_fn), "320k")
+    status = convert_flac2mp3(idx, os.path.join(src_dir, flac_fn), "192k")
     if status != 0:
         break
