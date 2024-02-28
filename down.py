@@ -1,6 +1,7 @@
 import os
 
 import requests
+import shutil
 
 download_proxies = {
     'http': '',
@@ -34,6 +35,9 @@ def download_file(songs_info, download_dir):
 
     verify = verify_file(download_dir, songs_info)
     songs_info['download_verify'] = verify
+    song_path = os.path.join(download_dir, songs_info['download_path'])
+    target_path = os.path.join(download_dir, '{0}-{1}.mp3'.format(songs_info['songname'], songs_info['signernames']))
+    shutil.copy(song_path, target_path)
     return verify
 
 
@@ -47,4 +51,6 @@ def verify_file(down_dir, songs_info):
     if size != songs_info['filesize']:
         return False
     else:
+        target_path = os.path.join(down_dir, '{0}-{1}.mp3'.format(songs_info['songname'], songs_info['signernames']))
+        shutil.copy(song_path, target_path)
         return True

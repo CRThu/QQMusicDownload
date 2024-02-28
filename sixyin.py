@@ -89,9 +89,12 @@ def get_download_link(song_info, music_dir, key):
     if result['code'] == 400:
         return None
     else:
-        song_info['download_link'] = result['data'][0]
-
-        return song_info['download_link']
+        if ('data' in result.keys()):
+            song_info['download_link'] = result['data'][0]
+            return song_info['download_link']
+        else:
+            song_info['download_response'] = result
+            return None
 
 
 def reset_verify_failed_songs_info(songs_info):
