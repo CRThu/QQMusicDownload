@@ -47,7 +47,7 @@
   `songmid`字段在 `\cache\playlist.{id}.json`文件中找到。  
   具体sign计算方式请跳转至此链接查看：[Python版QQ音乐sign加密](https://gist.github.com/xyuanmu/9338af7dc3ac2d3a1c4cd067e7d51bc0)  
 
-  下载歌曲接口：[接口URL](http://dl.stream.qqmusic.qq.com/C400003iMNk90opPDm.m4a?vkey=50E1A39D9250BF152815E439B7C79C40ABF5095BAD722E832FEB9A54C2AE38018B7E2382F42118B295CCF3619DB78A8C715B826EA188F949&uin=0&guid=5556263040&fromtag=120032)
+  下载歌曲接口：`http://dl.stream.qqmusic.qq.com/C400003iMNk90opPDm.m4a?vkey=50E1A39D9250BF152815E439B7C79C40ABF5095BAD722E832FEB9A54C2AE38018B7E2382F42118B295CCF3619DB78A8C715B826EA188F949&uin=0&guid=5556263040&fromtag=120032`
   
   在此示例中，`C400003iMNk90opPDm.m4a` 是文件名，由对应的解析度前缀（4字节）、`songmid`和对应的文件扩展名组成。例如，`M800`表示320k的MP3格式，`M500`表示128k的MP3格式，`F000`表示FLAC格式。`vkey`通过上述接口的响应获得。
 
